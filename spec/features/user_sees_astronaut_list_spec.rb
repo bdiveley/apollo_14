@@ -23,7 +23,7 @@ describe 'user sees astronaut list' do
 
       expect(page).to have_content("Average Age: 43.0")
     end
-    it 'displays the average age of the astronauts' do
+    it 'displays all missions for each astronaut' do
       astronaut = Astronaut.create(name: "Bailey", age: 33, job: "Flight Navigator")
       astronaut_2 = Astronaut.create(name: "Bob", age: 53, job: "Space Cadet")
 
@@ -31,12 +31,24 @@ describe 'user sees astronaut list' do
       mission_2 = astronaut.missions.create(title: "Second Mission", time_in_space: 45)
 
       visit astronauts_path
-
-      expect(page).to have_content("First Mission")
-      expect(page).to have_content("Time in Space: 60")
-      expect(page).to have_content("Second Mission")
-      expect(page).to have_content("Time in Space: 45")
-
+      expect("#astronaut-#{astronaut.id}").to have_content("First Mission")
+      expect("#astronaut-#{astronaut.id}").to have_content("Time in Space: 60")
+      expect("#astronaut-#{astronaut.id}").to have_content("Second Mission")
+      expect("#astronaut-#{astronaut.id}").to have_content("Time in Space: 45")
     end
+    # it 'displays total time in space for each astronaut' do
+    #   astronaut = Astronaut.create(name: "Bailey", age: 33, job: "Flight Navigator")
+    #   astronaut_2 = Astronaut.create(name: "Bob", age: 53, job: "Space Cadet")
+    #
+    #   mission_1 = astronaut.missions.create(title: "First Mission", time_in_space: 60)
+    #   mission_2 = astronaut.missions.create(title: "Second Mission", time_in_space: 45)
+    #
+    #   visit astronauts_path
+    #
+    #   expect(page).to have_content("First Mission")
+    #   expect(page).to have_content("Time in Space: 60")
+    #   expect(page).to have_content("Second Mission")
+    #   expect(page).to have_content("Time in Space: 45")
+    # end
   end
 end
